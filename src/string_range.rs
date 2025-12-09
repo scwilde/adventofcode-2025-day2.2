@@ -35,9 +35,11 @@ impl StringRange {
             return Err(format!("Start value ({}) occurs after end ({}) in sequence", start, end));
         }
 
+        let end = format!("{}", end);
+        let max_digits = end.len();
         Ok(StringRange{
             status: Status::NotStarted,
-            current: format!("{}", start),
+            current: format!("{:0max_digits$}", start),
             end: format!("{}", end)
         })
     }
