@@ -1,5 +1,4 @@
 use clap::Parser;
-use std::time::Instant;
 
 /// Advent of code 2025, Day 1, Puzzle 1:
 /// Counts the number of zeroes while doing a series of modulo arithmetic operations
@@ -25,14 +24,14 @@ impl Cli {
         }
     }
 
-    pub fn log_benchmark<F>(&self, level: u8, f: F)
-    where
-        F: FnOnce() -> ()
-    {
-        if self.logging_level >= level && self.benchmarking {
-            let timer = Instant::now();
-            f();
-            eprintln!("{}Finshed in {}μs", "   ".repeat((level-1).into()), timer.elapsed().as_micros());
-        }
-    }
+    // pub fn log_benchmark<F, T>(&self, level: u8, f: F) -> T
+    // where
+    //     F: FnOnce() -> T
+    // {
+    //     if self.logging_level >= level && self.benchmarking {
+    //         let timer = Instant::now();
+    //         f();
+    //         eprintln!("{}Finshed in {}μs", "   ".repeat((level-1).into()), timer.elapsed().as_micros());
+    //     }
+    // }
 }
