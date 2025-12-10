@@ -4,6 +4,9 @@ enum Status {
     Finished
 }
 
+// ! Depricated for being too slow
+/// The purpose of this struct was to make it so I dont have to constantly be converting
+/// numbers in a range into strings. It is 5x slower than just converting to strings
 pub struct StringRange {
     status: Status,
     current: String,
@@ -30,7 +33,6 @@ fn increment_digit(numeric_string: &mut String, n: usize) {
 
 impl StringRange {
     pub fn new(start: u64, end: u64) -> Result<Self, String> {
-        // TODO: pad out both numbers to be the same length
         if start > end {
             return Err(format!("Start value ({}) occurs after end ({}) in sequence", start, end));
         }

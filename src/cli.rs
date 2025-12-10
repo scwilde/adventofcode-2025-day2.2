@@ -11,7 +11,7 @@ pub struct Cli {
     pub logging_level: u8,
 
     /// Print execution time after each logged task
-    #[arg(long)]
+    #[arg(short, long)]
     pub benchmarking: bool,
 
     /// Text file containing puzzle input
