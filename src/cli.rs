@@ -25,7 +25,10 @@ impl Cli {
         }
     }
 
-    pub fn log_benchmark(&self, level: u8, f: fn()) {
+    pub fn log_benchmark<F>(&self, level: u8, f: F)
+    where
+        F: FnOnce() -> ()
+    {
         if self.logging_level >= level && self.benchmarking {
             let timer = Instant::now();
             f();
