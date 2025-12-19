@@ -8,13 +8,15 @@ pub struct Cli {
     /// Logging level to print. -v, -vv, or -vvv for levels 1, 2, or 3
     #[arg(short = 'v', action = clap::ArgAction::Count)]
     pub logging_level: u8,
-
-    /// Print execution time after each logged task
-    #[arg(short, long)]
-    pub benchmarking: bool,
-
+    
     /// Text file containing puzzle input
-    pub input_path: String
+    pub input_path: String,
+
+    /// How many invalid IDs there should be if the puzzle is solved correctly
+    pub expected_invalid_id_ct: u64,
+
+    /// Sum of all the invalid IDs when the puzzle is solved correctly
+    pub expected_invalid_id_sum: u64,
 }
 
 impl Cli {
