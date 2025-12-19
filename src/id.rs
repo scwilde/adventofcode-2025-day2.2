@@ -60,7 +60,7 @@ pub fn is_id_valid_kyuu(id: u64) -> bool {
     true
 }
 
-pub fn is_id_valid_numeric(id: u64) -> bool {
+pub fn is_id_valid_orlp(id: u64) -> bool {
     // Find number of digits and highest digit unit.
     // This computes id.ilog10() and 10u64.pow(id.ilog10()) simultaneously.
     let mut highest_digit_unit = 1;

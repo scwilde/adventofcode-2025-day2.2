@@ -47,7 +47,6 @@ pub fn solve(cli: &cli::Cli, is_id_valid: fn(u64) -> bool) -> Result<(u64, u64),
         "Parsed {} ID ranges and found {} invalid IDs out of {} total. Invalid ID sum:",
         parsed_range_count, total_invalid_id_count, total_parsed_id_count
     ));
-    println!("{}", invalid_id_sum);
 
     Ok((total_invalid_id_count, invalid_id_sum))
 }
