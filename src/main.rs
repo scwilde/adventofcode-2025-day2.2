@@ -1,3 +1,4 @@
+use std::collections::VecDeque;
 use std::error::Error;
 use std::fs;
 use clap::Parser;
@@ -6,7 +7,7 @@ use itertools::Itertools;
 mod cli;
 mod utils;
 
-fn is_id_valid(id: u64) -> bool{
+fn is_id_valid(id: u64) -> bool {
     let id_string = id.to_string();
     let id_len = id_string.len();
     (1..id_len)
@@ -16,6 +17,20 @@ fn is_id_valid(id: u64) -> bool{
             let base = chunks.into_iter().next().unwrap().collect::<String>();
             chunks.into_iter().any(|chunk| chunk.collect::<String>() != base)
         })
+}
+
+fn vd_is_id_valid(id: u64) -> bool {
+    let id: Vec<_> = id.to_string().chars().collect();
+    let base: VecDeque<_> = id.iter().collect();
+    let mut test: VecDeque<_> = id.iter().collect();
+    test.rotate_right(1);
+
+    for _ in 1..=id.len()/2 {
+        if base == test {return false;}
+        test.rotate_right(1);
+    }
+
+    true
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
@@ -32,13 +47,13 @@ fn main() -> Result<(), Box<dyn Error>> {
         cli.log_at_level(2, format!("Parsing {}...", id_range));
         let id_range = utils::Range::from_string(id_range)?;
 
-        cli.log_at_level(1, format!(
+        cli.log_at_level(2, format!(
             "Searching range {}..={} for invalid IDs...",
             id_range.lower, id_range.upper
         ));
         let mut range_invalid_id_count = 0;
         for id in id_range.lower..=id_range.upper {
-            match is_id_valid(id) {
+            match vd_is_id_valid(id) {
                 false => {
                     cli.log_at_level(3, format!("{} is not a valid ID!", id));
                     range_invalid_id_count += 1;
