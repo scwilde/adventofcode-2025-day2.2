@@ -41,6 +41,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     cli.log_at_level(1, "Parsing ID Ranges...");
     let mut parsed_range_count = 0;
+    let mut total_parsed_id_count = 0;
     let mut total_invalid_id_count = 0;
     let mut invalid_id_sum = 0;
     for id_range in data.split(",") {
@@ -52,7 +53,10 @@ fn main() -> Result<(), Box<dyn Error>> {
             id_range.lower, id_range.upper
         ));
         let mut range_invalid_id_count = 0;
+        let mut range_parsed_id_count = 0;
         for id in id_range.lower..=id_range.upper {
+            total_parsed_id_count += 1;
+            range_parsed_id_count += 1;
             match vd_is_id_valid(id) {
                 false => {
                     cli.log_at_level(3, format!("{} is not a valid ID!", id));
@@ -64,15 +68,15 @@ fn main() -> Result<(), Box<dyn Error>> {
             }
         }
         cli.log_at_level(2, format!(
-            "Found {} invalid IDs. New invalid ID sum {}",
-            range_invalid_id_count, invalid_id_sum
+            "Found {} invalid IDs out of {} total. New invalid ID sum {}",
+            range_invalid_id_count, range_parsed_id_count, invalid_id_sum
         ));
         parsed_range_count += 1;
     }
 
     cli.log_at_level(1, format!(
-        "Parsed {} ID ranges and found {} invalid IDs. Invalid ID sum:",
-        parsed_range_count, total_invalid_id_count
+        "Parsed {} ID ranges and found {} invalid IDs out of {} total. Invalid ID sum:",
+        parsed_range_count, total_invalid_id_count, total_parsed_id_count
     ));
     println!("{}", invalid_id_sum);
 
